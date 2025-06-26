@@ -47,4 +47,7 @@ const configur: { [key: string]: Knex.Config } = {
   },
 };
 
+
+
 export default configur;
+
