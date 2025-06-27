@@ -13,6 +13,7 @@ describe('Wallet Operations', () => {
       password: 'password123',
       first_name: 'John',
       last_name: 'Doe',
+      bvn: '34657665676'
     });
     
     userId = user.id;
@@ -78,6 +79,7 @@ describe('Wallet Operations', () => {
         password: 'password123',
         first_name: 'Jane',
         last_name: 'Doe',
+        bvn: '123345545456'
       });
 
       const recipientAuth = await UserService.authenticate('recipient@example.com', 'password123');

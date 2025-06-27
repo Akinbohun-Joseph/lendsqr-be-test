@@ -5,19 +5,23 @@ export const errorHandler = (
   error: any,
   req: Request,
   res: Response,
-  next: NextFunction
-):void => {
-  logger.error(error.message, { stack: error.stack });
+  _next: NextFunction
+): void => {
+  const statusCode = error.status || 500;
+  const errorMessage =
+    error.message || (statusCode === 500 ? 'Internal server error' : 'An error occurred');
 
- /* if (error.name === 'ValidationError') {
-    return res.status(400).json({ error: error.message });
+  logger.error(errorMessage, { stack: error.stack });
+
+  if (error.name === 'ValidationError') {
+    res.status(400).json({ success: false, error: errorMessage });
+    return;
   }
 
   if (error.name === 'UnauthorizedError') {
-    return res.status(401).json({ error: 'Unauthorized' });
+    res.status(401).json({ success: false, error: 'Unauthorized' });
+    return;
   }
 
-  return res.status(500).json({ error: 'Internal server error' });
+  res.status(statusCode).json({ success: false, error: errorMessage });
 };
-*/
-}

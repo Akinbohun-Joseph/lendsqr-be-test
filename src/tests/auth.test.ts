@@ -11,6 +11,7 @@ describe('Authentication', () => {
         first_name: 'John',
         last_name: 'Doe',
         phone: '+1234567890',
+        bvn: '12345678901'
       };
 
       const response = await request(app)
@@ -30,6 +31,7 @@ describe('Authentication', () => {
         password: 'password123',
         first_name: 'John',
         last_name: 'Doe',
+        bvn: '45678901234'
       };
 
       const response = await request(app)
@@ -46,6 +48,7 @@ describe('Authentication', () => {
         password: 'password123',
         first_name: 'John',
         last_name: 'Doe',
+        bvn: '12345678901'
       };
 
       // Create user first
@@ -62,14 +65,16 @@ describe('Authentication', () => {
   });
 
   describe('POST /api/auth/login', () => {
-    beforeEach(async () => {
-      await UserService.create({
-        email: 'test@example.com',
-        password: 'password123',
-        first_name: 'John',
-        last_name: 'Doe',
-      });
-    });
+beforeEach(async () => {
+  await UserService.create({
+    email: 'test@example.com',
+    password: 'securePassword123',
+    first_name: 'John',
+    last_name: 'Doe',
+    bvn: '12345678901' 
+  });
+});
+
 
     it('should login successfully with valid credentials', async () => {
       const response = await request(app)
@@ -98,4 +103,3 @@ describe('Authentication', () => {
     });
   });
 });
-
