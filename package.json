@@ -2,13 +2,13 @@
   "name": "demo-credit",
   "version": "1.0.0",
   "description": "A mobile lending app",
-  "main": "server.js",
+  "main": "server.ts",
   "scripts": {
     "test": "jest.ts",
     "migrate": "knex migrate:latest --knexfile knexfile.js",
-    "start": "node dist/server.js",
+    "start": "tsx src/server.ts",
     "dev": "tsx watch src/server.ts",
-    "build": "tsc",
+    "build": "echo 'Build step skipped - using tsx'",
     "lint": "eslint . --ext .ts,.js"
   },
   "keywords": [
