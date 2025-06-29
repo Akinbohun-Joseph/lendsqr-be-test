@@ -1,4 +1,4 @@
-Demo Credit Wallet API
+💳 Demo Credit Wallet API
 
 A modular, scalable backend API built for a fintech wallet system. It supports secure user onboarding (with blacklist checks), wallet creation, funding, withdrawal, transfers, and transaction history, with full Postman and Swagger documentation.
 
@@ -79,7 +79,6 @@ Git, GitHub, Postman
 Version control and testing
 
 📁 Folder Structure
-
 /src
 ├── controllers/       # Route logic
 ├── routes/            # API endpoints
@@ -203,7 +202,6 @@ Test Wallet Endpoints:
 ✅ Each request includes Authorization: Bearer <token> in headers
 
 🐳 Docker + Ngrok Setup
-
 # Start MySQL container
 docker-compose up -d
 
@@ -241,7 +239,6 @@ Blacklist API (mock)
 Simulates real-time compliance checks
 
 🚦 Running the Project
-
 # 1. Install dependencies
 npm install
 
@@ -258,8 +255,10 @@ npx knex seed:run --knexfile src/db/knexfile.ts
 
 👤 Author
 
-Akinbohun Opeyemi JosephBackend Developer | GitHub: @Akinbohun-Joseph
+Akinbohun Opeyemi JosephBackend Developer 
+GitHub: @Akinbohun-Joseph
 
 📄 License
 
 Licensed under the MIT License.
+
