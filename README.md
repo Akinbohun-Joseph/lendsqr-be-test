@@ -1,177 +1,265 @@
-# 💰 Demo Wallet Backend API
+Demo Credit Wallet API
 
-A scalable backend system for a demo fintech wallet app, built with Node.js, TypeScript, MySQL, and Docker. It handles user onboarding with blacklist verification, KYC-like flows, and wallet transactions.
+A modular, scalable backend API built for a fintech wallet system. It supports secure user onboarding (with blacklist checks), wallet creation, funding, withdrawal, transfers, and transaction history, with full Postman and Swagger documentation.
 
----
+🎯 Project Goal
 
-## 📦 Tech Stack
+To build a production-ready backend system that can:
 
-| Area         | Stack                       |
-|--------------|-----------------------------|
-| Language     | Node.js + TypeScript        |
-| Framework    | Express.js                  |
-| DB           | MySQL (Dockerized)          |
-| ORM          | Knex.js                     |
-| Auth         | JWT                         |
-| Container    | Docker                      |
-| Dev Tools    | Postman, Git, GitHub        |
+Register and verify users (including blacklist compliance)
 
----
+Create wallet accounts on registration
 
-## 🚀 Features
+Perform wallet transactions: fund, withdraw, transfer
 
-- ✅ **User Registration** with blacklist verification
-- ✅ **Authentication** via JWT
-- ✅ **Wallet Creation** on registration
-- ✅ **Fund Wallet** (via virtual endpoint)
-- ✅ **Transfer Funds** to other users
-- ✅ **Transaction History** tracking
-- ✅ **Dockerized MySQL Database**
-- ✅ **Environment Variables** for config
+Track transaction history and balances
 
----
+Be modular and scalable enough to add credit scoring, analytics, etc.
 
-## 🔧 Setup Instructions
+⚙️ Tech Stack
 
-### 1. Clone the Repo
+Area
 
-```bash
-git clone https://github.com/Akinbohun-Joseph/lendsqr-be-test.git
-cd lendsqr-be-test
-2. Install Dependencies
-bash
-Copy
-Edit
-npm install
-3. Environment Setup
-Create a .env file using the .env.example provided:
+Technology
 
-env
-Copy
-Edit
-PORT=4000
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_USER=projectuser
-DB_PASSWORD=projectpass
-DB_NAME=project_db
-JWT_SECRET=your_jwt_secret
-4. Start MySQL via Docker
-bash
-Copy
-Edit
-docker run --name project-mysql -e MYSQL_ROOT_PASSWORD=myStrongRootPass -e MYSQL_USER=projectuser -e MYSQL_PASSWORD=projectpass -e MYSQL_DATABASE=project_db -p 3306:3306 -v mysql_data:/var/lib/mysql -d mysql:8
-5. Run Migrations
-bash
-Copy
-Edit
-npx knex migrate:latest --knexfile knexfile.ts --esm
-6. Start the App
-bash
-Copy
-Edit
-npm run dev
-🗂 Project Structure
-bash
-Copy
-Edit
-src/
-│
-├── controllers/       # Route handlers
-├── services/          # Business logic
-├── models/            # Knex queries and schema
-├── routes/            # Express route declarations
-├── middleware/        # Auth, validation, error handling
-├── config/            # DB connection, env config
-├── utils/             # Helpers
+Purpose
+
+Language
+
+Node.js + TypeScript
+
+Type-safe server runtime
+
+Framework
+
+Express.js
+
+Lightweight backend framework
+
+DB
+
+MySQL (Docker + Ngrok)
+
+Persistent relational storage
+
+Query Builder
+
+Knex.js + mysql2
+
+SQL builder with migrations
+
+Auth
+
+JWT
+
+Secure stateless authentication
+
+Container
+
+Docker
+
+Environment isolation, DB management
+
+Tunnel
+
+Ngrok
+
+Expose Dockerized MySQL for remote access
+
+Docs
+
+Swagger + Postman
+
+API documentation and test collections
+
+Dev Tools
+
+Git, GitHub, Postman
+
+Version control and testing
+
+📁 Folder Structure
+
+/src
+├── controllers/       # Route logic
+├── routes/            # API endpoints
+├── services/          # Business rules (wallet, user, blacklist)
+├── middleware/        # JWT auth, validation
+├── db/                # Knex config, migrations, seeds
+├── utils/             # Logger, async handlers, etc
+├── types/             # TypeScript interfaces
 └── server.ts          # Entry point
+
+🔐 Authentication
+
+All protected routes require JWT:
+
+Authorization: Bearer <your_token_here>
+
+JWT is returned on successful login.
+
 📬 API Endpoints
-Method	Endpoint	Description	Auth
-POST	/api/register	Register new user	❌
-POST	/api/login	Login user	❌
-GET	/api/wallet	Get user wallet	✅
-POST	/api/wallet/fund	Add funds to wallet	✅
-POST	/api/wallet/transfer	Transfer funds to user	✅
-GET	/api/transactions	View transaction history	✅
 
-✅ = Requires JWT token in Authorization header.
+👤 Auth & User
 
-📌 Key Decisions & Notes
-Monolithic Design: Simpler for MVP, easy to maintain and refactor later.
+Method
 
-Dockerized MySQL: Ensures dev consistency across machines.
+Endpoint
 
-Knex over ORM: Gives control over SQL and schema.
+Description
 
-Custom Blacklist API: Used due to inability to access the Karma Blacklist API, ensuring realistic KYC simulation.
+POST
 
-🧪 Testing
-{
-  "info": {
-    "_postman_id": "1a234567-b89c-40d0-aaa0-postmandemo",
-    "name": "Demo Wallet API",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "Register User",
-      "request": {
-        "method": "POST",
-        "header": [{ "key": "Content-Type", "value": "application/json" }],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"pass1234\",\n  \"name\": \"Demo User\"\n}"
-        },
-        "url": {
-          "raw": "http://localhost:4000/api/register",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "4000",
-          "path": ["api", "register"]
-        }
-      }
-    },
-    {
-      "name": "Login User",
-      "request": {
-        "method": "POST",
-        "header": [{ "key": "Content-Type", "value": "application/json" }],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"pass1234\"\n}"
-        },
-        "url": {
-          "raw": "http://localhost:4000/api/login",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "4000",
-          "path": ["api", "login"]
-        }
-      }
-    },
-    {
-      "name": "Get Wallet (Protected)",
-      "request": {
-        "method": "GET",
-        "header": [
-          { "key": "Authorization", "value": "Bearer {{token}}" }
-        ],
-        "url": {
-          "raw": "http://localhost:4000/api/wallet",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "4000",
-          "path": ["api", "wallet"]
-        }
-      }
-    },
+/api/user/register
+
+Register a new user
+
+POST
+
+/api/user/login
+
+Authenticate user
+
+GET
+
+/api/user/profile
+
+Get user profile
+
+PUT
+
+/api/user/profile
+
+Update user profile
+
+💰 Wallet
+
+Method
+
+Endpoint
+
+Description
+
+GET
+
+/api/wallet/balance
+
+View wallet balance
+
+POST
+
+/api/wallet/fund
+
+Fund wallet
+
+POST
+
+/api/wallet/withdraw
+
+Withdraw from wallet
+
+POST
+
+/api/wallet/transfer
+
+Transfer to another wallet
+
+GET
+
+/api/wallet/transactions
+
+Transaction history
+
+All wallet routes require authentication.
+
+🧪 Postman Testing
+
+All endpoints are grouped in a [Demo Wallet API Postman Collection]
+
+Base URL: http://localhost:3000
+
+Swagger Docs: http://localhost:3000/api-docs
+
+⚙️ Example Test Flow (in Postman):
+
+Register a user → Copy returned token
+
+Login → Receive JWT
+
+Set token as Bearer Authorization in Postman
+
+Test Wallet Endpoints:
+
+/wallet/fund
+
+/wallet/balance
+
+/wallet/transfer
+
+/wallet/withdraw
+
+/wallet/transactions
+
+✅ Each request includes Authorization: Bearer <token> in headers
+
+🐳 Docker + Ngrok Setup
+
+# Start MySQL container
+docker-compose up -d
+
+# Open Ngrok tunnel
+ngrok tcp 3306
+
+# Update .env with Ngrok values:
+DB_HOST=5.tcp.ngrok.io
+DB_PORT=<forwarded_port>
+
+🧱 Key Design Decisions
+
+Decision
+
+Reason
+
+Monolithic
+
+Simple MVP, quick testing and development
+
+Knex over Sequelize
+
+Better query control, easier debugging
+
+Docker for DB
+
+No local MySQL conflicts, reproducibility
+
+Ngrok
+
+Enables external access to containerized DB
+
+Blacklist API (mock)
+
+Simulates real-time compliance checks
+
+🚦 Running the Project
+
+# 1. Install dependencies
+npm install
+
+# 2. Set up your .env file (see .env.example)
+
+# 3. Start dev server
+npx tsx src/server.ts
+
+# 4. Run DB migrations
+npx knex migrate:latest --knexfile src/db/knexfile.ts
+
+# 5. Seed DB (optional)
+npx knex seed:run --knexfile src/db/knexfile.ts
+
+👤 Author
+
+Akinbohun Opeyemi JosephBackend Developer | GitHub: @Akinbohun-Joseph
 
 📄 License
-This project is licensed under the MIT License.
 
-🤝 Author
-Akinbohun Opeyemi Joseph
-
-GitHub: @Akinbohun-Joseph
-
-LinkedIn: @akinbohun-opeyemi
+Licensed under the MIT License.
